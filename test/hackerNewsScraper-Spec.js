@@ -72,4 +72,12 @@ describe('Test for HackerNewsScraper initialization', function() {
     }
     catch(err) {}
   });
-})
+
+  it('should set the URL correctly during initialization', function() {
+    try {
+      let scraper = new HackerNewsScraper(50);
+      expect(scraper.URL).to.eql('https://news.ycombinator.com');
+    }
+    catch(err) {}
+  });
+});

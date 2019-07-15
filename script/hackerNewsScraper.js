@@ -7,6 +7,7 @@ class HackerNewsScraper {
       throw 'Number of posts should be a positive integer <= 100';
     }
     this.numberOfPosts = numberOfPosts;
+    this.URL = 'https://news.ycombinator.com';
   }
 
   _validateProp(numberOfPosts) {
