@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
+const nock = require('nock');
 const { HackerNewsScraper } = require('../script/hackerNewsScraper');
 
 describe('Test for HackerNewsScraper initialization', function() {
@@ -79,5 +80,54 @@ describe('Test for HackerNewsScraper initialization', function() {
       expect(scraper.URL).to.eql('https://news.ycombinator.com');
     }
     catch(err) {}
+  });
+});
+
+describe('Test for API call', function() {
+  it('should pass the error correctly when there is an error from server side', async function() {
+    let scraper = new HackerNewsScraper(50);
+    nock(scraper.URL)
+      .get('/')
+      .reply(500, null);
+    try {
+      await scraper.getTopPosts();
+    } catch(err) {
+      expect(err).to.eql(`Error: Request failed with status code 500 while hitting URL: ${scraper.URL}`);
+    }
+  });
+
+  it('should pass the error correctly when there is a 404 error', async function() {
+    let scraper = new HackerNewsScraper(50);
+    nock(scraper.URL)
+      .get('/')
+      .reply(404, null);
+    try {
+      await scraper.getTopPosts();
+    } catch(err) {
+      expect(err).to.eql(`Error: Request failed with status code 404 while hitting URL: ${scraper.URL}`);
+    }
+  });
+
+  it('should pass the error correctly when there is no posts', async function() {
+    let scraper = new HackerNewsScraper(50);
+    const dummyResponse = '<html></html>'
+    nock(scraper.URL)
+      .get('/')
+      .reply(200, dummyResponse);
+    try {
+      await scraper.getTopPosts();
+    } catch(err) {
+      expect(err).to.eql(`No posts found in HackerNews with url: ${scraper.URL}`);
+    }
+  });
+
+  it('should calculate posts per page correctly', async function() {
+    let scraper = new HackerNewsScraper(50);
+    const dummyResponse = '<html> <body> <table id="hnmain"> <tbody> <tr class="athing"> <td class="title"><span class="rank">1.</span></td> <td class="title"><a href="https://www.bbc.co.uk/news/business-48962557" class="storylink">New face of the Bank of England £50 note is revealed</a></td> </tr> <tr> <td class="subtext"> <span class="score">14 points</span> by <a href="user?id=hanoz" class="hnuser">hanoz</a> <span class="age"><a href="item?id=20439425">27 minutes ago</a></span> <span id="unv_20439425"></span> | <a href="hide?id=20439425&goto=news">hide</a> | <a href="item?id=20439425">1 comment</a> </td> </tr> </tbody> </table> </body> </html>'
+    nock(scraper.URL)
+      .get('/')
+      .reply(200, dummyResponse);
+    await scraper.getTopPosts();
+    expect(scraper.postsPerPage).to.eql(1);
   });
 });
