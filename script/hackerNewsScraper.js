@@ -2,7 +2,9 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 class HackerNewsScraper {
-  constructor(numberOfPosts) {
+  constructor(n) {
+    let numberOfPosts = Number(n);
+
     if(!this._validateProp(numberOfPosts)) {
       throw 'Number of posts should be a positive integer <= 100';
     }
@@ -11,8 +13,7 @@ class HackerNewsScraper {
   }
 
   _validateProp(numberOfPosts) {
-    let n = Number(numberOfPosts);
-    return !n || !Number.isInteger(n) || n<=0 || n>100 ? false : true;
+    return !numberOfPosts || !Number.isInteger(numberOfPosts) || numberOfPosts<=0 || numberOfPosts>100 ? false : true;
   }
 
   async _getNumberOfPostsPerPage() {
