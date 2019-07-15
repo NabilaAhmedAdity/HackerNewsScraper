@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "This project fetches n top posts from HackerNews",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/**/*-Spec.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NabilaAhmedAdity/HackerNewsScraper.git"
   },
-  "author": "Nabila Ahmed"
+  "author": "Nabila Ahmed",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "sinon": "^7.3.2"
+  }
 }
