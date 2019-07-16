@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "This project fetches n top posts from HackerNews",
   "scripts": {
-    "test": "mocha test/**/*-Spec.js"
+    "test": "mocha src/**/*-Spec.js",
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
