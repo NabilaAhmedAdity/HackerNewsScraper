@@ -94,28 +94,14 @@ class HackerNewsScraper {
     }
   }
 
-  // This function hits the urls and return the promises in list
-  _getAPIResponses(startPage, endPage) {
-    let responses = [];
-    
-    for(let page=startPage; page<=endPage; page++) {
-      responses.push(axios.get(`${this.URL}/news?p=${page}`));
-    }
-    return responses;
-  }
-
   async _getTopPosts() {
-    let offset = 0;
+    let page = 0;
 
     while(this.topPosts.length < this.numberOfPosts) {
-      let startPage = offset + 1;
-      let endPage = offset + Math.ceil((this.numberOfPosts-this.topPosts.length) / this.postsPerPage);
-      offset = endPage;
-      let responses = this._getAPIResponses(startPage, endPage);
-
+      page++;
       try {
-        let htmls = (await Promise.all(responses)).map(({data}) => data);
-        htmls.forEach(html => this._parseHtml(html))
+        let response = await axios.get(`${this.URL}/news?p=${page}`);
+        this._parseHtml(response.data);
       } catch(err) {
         throw err;
       }
