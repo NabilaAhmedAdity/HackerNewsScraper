@@ -2,8 +2,8 @@ const { HackerNewsScraper } = require('hackerNewsScraper');
 
 async function main() {
   try{
-    let scraper = new HackerNewsScraper(100);
-    let posts = await scraper.getTopPosts();
+    let scraper = new HackerNewsScraper();
+    let posts = await scraper.getTopPosts(100);
     console.log(posts);
   } catch(err) {
     console.log(err);
