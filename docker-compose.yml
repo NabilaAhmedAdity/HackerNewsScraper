@@ -2,5 +2,3 @@ version: '3'
 services:
   hacker-news-scraper:
     build: .
-    volumes:
-    - .:/code
