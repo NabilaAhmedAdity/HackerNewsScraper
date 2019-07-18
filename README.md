@@ -4,9 +4,10 @@
 This is a command line tool which can extract top **N** valid posts from HackerNews in **JSON** format. Where **N** is a number given by user when running the command.
 
 ### Example
-```
+``` bash
 # Run command-line to get top 2 valid posts
 $ hackernews -p 2
+
 [
     {
         "title": "Web Scraping in 2016",
@@ -26,8 +27,10 @@ $ hackernews -p 2
     }
 ]
 
+
 # Run test
 $ npm test
+
 > hackernewsscraper@1.0.0 test /Users/nabila/Desktop/HackerNewsScraper
 > mocha src/**/*-Spec.js
 
@@ -70,7 +73,7 @@ A post is valid if the following constraints matched:
 
 ## Installation
 ### Without Docker
-```
+``` bash
 # Pre-requisite
 # You need Node8+ and npm
 # More details https://nodejs.org/en/download
@@ -90,7 +93,8 @@ $ hackernews -p 10
 ```
 
 ### With Docker
-```
+
+```bash
 # Pre-requisite
 # You need Docker and Docker-Compose
 # More details https://docs.docker.com/compose/install
